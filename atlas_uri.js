@@ -1,0 +1,1 @@
+module.exports = uri = "mongodb+srv://test-admin:test@learning-course.ev2et7x.mongodb.net/"

@@ -1,0 +1,514 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "caveat";
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: #F7DAD9;
+  padding: 10px 0px;
+  border-bottom: 0px solid black;
+}
+header .header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0px 15px;
+}
+header .header .hamburger {
+  display: none;
+}
+@media (max-width: 600px) {
+  header .header .hamburger {
+    display: block;
+    width: 8%;
+  }
+}
+header .header .profile {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: #5C4B51;
+  gap: 5px;
+}
+@media (max-width: 600px) {
+  header .header .profile {
+    flex-direction: column;
+  }
+}
+header .header .profile button {
+  background-color: #EDB8B5;
+  border-radius: 12px;
+  padding: 7px 15px;
+  box-shadow: 0 2px 4px rgba(237, 184, 181, 0.3);
+}
+header .header .profile button:hover {
+  background-color: #D4A6A3;
+  cursor: pointer;
+}
+header .header .profile .photo {
+  height: 30px;
+  background-color: #ECF0F1;
+  width: 30px;
+  border-radius: 100%;
+}
+header .header .profile p {
+  text-decoration: none;
+}
+header h1 {
+  color: #5C4B51;
+  -webkit-text-decoration: underline solid #3498DB;
+          text-decoration: underline solid #3498DB;
+}
+@media screen and (max-width: 600px) {
+  header h1 {
+    font-size: 1.5rem;
+  }
+}
+header #add-task {
+  fill: #5C4B51;
+}
+header #add-task:hover {
+  cursor: pointer;
+  fill: #EDB8B5;
+}
+
+.headings {
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: 250px calc(100% - 250px);
+}
+@media (max-width: 900px) and (min-width: 600px) {
+  .headings {
+    grid-template-columns: 30vw calc(100% - 30vw);
+  }
+}
+@media (max-width: 600px) {
+  .headings {
+    grid-template-columns: 100%;
+  }
+}
+.headings aside {
+  background-color: #F0E6E6;
+  height: calc(100vh - 59.2px);
+  border-radius: 4px;
+}
+.headings aside .aside {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 7px 7px 0px 7px;
+  color: #5C4B51;
+}
+.headings aside .aside .groups {
+  display: grid;
+  grid-template-columns: auto max-content;
+  align-items: center;
+  width: 100%;
+}
+.headings aside .aside .groups #add_group {
+  display: none;
+  background-color: #F0E6E6;
+  margin-top: 10px;
+}
+.headings aside .aside .groups #add_group:focus {
+  border: none;
+  border-bottom: 1px solid #5C4B51;
+  outline: none;
+}
+.headings aside .aside .groups #add_group::-moz-placeholder {
+  font-size: 17px;
+}
+.headings aside .aside .groups #add_group::placeholder {
+  font-size: 17px;
+}
+.headings aside .aside .groups #svg-add {
+  fill: #5C4B51;
+}
+.headings aside .aside .groups #svg-add:hover {
+  cursor: pointer;
+  fill: #EDB8B5;
+}
+.headings aside .aside #all_groups {
+  margin-top: 20px;
+  align-self: flex-start;
+  border: none;
+  width: 100%;
+}
+.headings aside .aside #all_groups li {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  width: 100%;
+  font-size: 19px;
+  transition: all 0.1s linear;
+}
+.headings aside .aside #all_groups li:hover {
+  border-bottom: 1px solid black;
+  box-shadow: -3px 3px 5px black;
+  border-bottom-left-radius: 4px;
+  font-size: 22px;
+  font-weight: 700;
+  transform: translateX(3px);
+  padding-left: 5px;
+  transition: all 0.1s linear;
+}
+.headings aside .aside #all_groups li svg {
+  fill: #5C4B51;
+}
+.headings aside .aside #all_groups li svg:hover {
+  fill: #D4A6A3;
+}
+@media (max-width: 600px) {
+  .headings aside {
+    position: fixed;
+    top: 68.2px;
+    left: 0;
+    width: 70vw;
+    height: calc(100vh - 68.2px);
+    z-index: 10;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  .headings aside.open {
+    transform: translateX(0);
+  }
+}
+.headings main {
+  background-color: #FFF9F5;
+  height: calc(100vh - 59.2px);
+}
+.headings main .background {
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.529);
+}
+.headings main .background .align {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.headings main .background .newTask {
+  background-color: #F7DAD9;
+  border-radius: 10px;
+  padding: 20px;
+  /* Increased padding */
+  position: relative;
+  line-height: 120%;
+  width: 80%;
+  width: 50%;
+  box-sizing: border-box;
+  /* Quill Editor Styling */
+}
+@media (max-width: 900px) {
+  .headings main .background .newTask {
+    width: 90%;
+  }
+}
+@media (max-width: 600px) {
+  .headings main .background .newTask {
+    width: 95%;
+  }
+}
+.headings main .background .newTask #formBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+}
+.headings main .background .newTask #formBar #discard {
+  color: red;
+  font-weight: 900;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 1.2em;
+}
+.headings main .background .newTask label {
+  color: #5C4B51;
+  font-weight: 500;
+  display: block;
+  /* Ensure labels are on their own line */
+  margin-bottom: 5px;
+}
+.headings main .background .newTask input[type=text],
+.headings main .background .newTask input[type=date],
+.headings main .background .newTask select,
+.headings main .background .newTask textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #D4A6A3;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 1em;
+  font-family: "Montserrat", sans-serif;
+  background-color: #FFF9F5;
+  color: #5C4B51;
+}
+.headings main .background .newTask input[type=text]:focus,
+.headings main .background .newTask input[type=date]:focus,
+.headings main .background .newTask select:focus,
+.headings main .background .newTask textarea:focus {
+  outline: none;
+  border-color: #EDB8B5;
+  box-shadow: 0 0 5px rgba(237, 184, 181, 0.5);
+}
+.headings main .background .newTask select {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  /* Remove default arrow */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%235C4B51' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px top 50%;
+  background-size: 16px;
+  padding-right: 30px;
+  /* Add space for arrow */
+}
+.headings main .background .newTask input[type=submit] {
+  background-color: #EDB8B5;
+  color: #5C4B51;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  font-family: "Montserrat", sans-serif;
+  transition: background-color 0.2s ease;
+}
+.headings main .background .newTask input[type=submit]:hover {
+  background-color: #D4A6A3;
+}
+.headings main .background .newTask #title {
+  width: 100%;
+}
+.headings main .background .newTask #description {
+  width: 100%;
+}
+.headings main .background .newTask .ql-container {
+  border: 1px solid #D4A6A3 !important;
+  border-radius: 0 0 5px 5px !important;
+  background-color: #FFF9F5 !important;
+  font-family: "Montserrat", sans-serif !important;
+  height: 150px !important;
+  margin-bottom: 15px;
+}
+.headings main .background .newTask .ql-toolbar {
+  border: 1px solid #D4A6A3 !important;
+  border-bottom: none !important;
+  border-radius: 5px 5px 0 0 !important;
+  background-color: #F7DAD9 !important;
+}
+.headings main .background .newTask .ql-toolbar .ql-stroke {
+  stroke: #5C4B51 !important;
+}
+.headings main .background .newTask .ql-toolbar .ql-fill {
+  fill: #5C4B51 !important;
+}
+.headings main .background .newTask .ql-toolbar .ql-picker {
+  color: #5C4B51 !important;
+}
+.headings main .background .newTask .ql-toolbar button:hover .ql-stroke,
+.headings main .background .newTask .ql-toolbar button:focus .ql-stroke {
+  stroke: #D4A6A3 !important;
+}
+.headings main .background .newTask .ql-toolbar button:hover .ql-fill,
+.headings main .background .newTask .ql-toolbar button:focus .ql-fill {
+  fill: #D4A6A3 !important;
+}
+.headings main .background .newTask .ql-editor {
+  font-size: 1em !important;
+  color: #5C4B51 !important;
+  padding: 12px !important;
+}
+.headings main .background .newTask .ql-editor:focus {
+  box-shadow: 0 0 5px rgba(237, 184, 181, 0.3);
+}
+.headings main .background .newTask .ql-editor p {
+  margin-bottom: 8px !important;
+}
+.headings main .background .newTask .ql-editor ul,
+.headings main .background .newTask .ql-editor ol {
+  padding-left: 1.5em !important;
+  margin: 8px 0 !important;
+}
+.headings main .background .newTask .ql-editor li {
+  margin: 5px 0 !important;
+  color: #5C4B51 !important;
+}
+.headings main .content {
+  padding: 1rem;
+  -moz-columns: 4 250px;
+       columns: 4 250px;
+  -moz-column-gap: 1rem;
+       column-gap: 1rem;
+  width: calc(100% - 2rem);
+  margin: 0 auto;
+}
+@media (max-width: 900px) and (min-width: 600px) {
+  .headings main .content {
+    -moz-columns: 3 250px;
+         columns: 3 250px;
+  }
+}
+@media (max-width: 600px) {
+  .headings main .content {
+    -moz-columns: 1 100%;
+         columns: 1 100%;
+    width: calc(100% - 2rem);
+  }
+}
+.headings main .content .task {
+  background-color: #F7DAD9;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 1.2rem;
+  -moz-column-break-inside: avoid;
+       break-inside: avoid;
+  border-radius: 12px;
+  padding: 15px;
+  position: relative;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(92, 75, 81, 0.1);
+}
+.headings main .content .task:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(92, 75, 81, 0.2);
+}
+.headings main .content .task .task-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #EDB8B5;
+}
+.headings main .content .task .task-header input[type=checkbox] {
+  min-width: 20px;
+  height: 20px;
+  margin-top: 5px;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border: 2px solid #D4A6A3;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.headings main .content .task .task-header input[type=checkbox]:checked {
+  background-color: #EDB8B5;
+  border-color: #EDB8B5;
+}
+.headings main .content .task .task-header input[type=checkbox]:checked::after {
+  content: "✓";
+  display: block;
+  text-align: center;
+  color: #5C4B51;
+  font-size: 14px;
+  line-height: 17px;
+}
+.headings main .content .task .task-header .taskHead {
+  flex-grow: 1;
+  font-weight: 600;
+  font-size: 1.3em;
+  color: #5C4B51;
+  margin-right: 30px;
+}
+.headings main .content .task .task-header .editTask {
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+.headings main .content .task .task-header .editTask:hover {
+  background-color: rgba(212, 166, 163, 0.2);
+  transform: rotate(5deg);
+}
+.headings main .content .task .taskDesc {
+  padding: 0 5px 15px 5px;
+  color: #5C4B51;
+  line-height: 1.4;
+}
+.headings main .content .task .taskDesc ul,
+.headings main .content .task .taskDesc ol {
+  padding-left: 1.5em;
+  margin: 8px 0;
+}
+.headings main .content .task .taskDesc li {
+  margin: 5px 0;
+}
+.headings main .content .task .task-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 12px;
+}
+.headings main .content .task .task-footer .deadline {
+  text-decoration: none;
+  color: rgb(158, 0, 0);
+  font-style: italic;
+  font-size: 0.9em;
+  border-bottom: 1px dashed rgb(158, 0, 0);
+}
+.headings main .content .task .task-footer .categ {
+  background-color: #EDB8B5;
+  padding: 4px 12px;
+  border-radius: 15px;
+  font-size: 0.9em;
+  color: #5C4B51;
+  font-weight: 500;
+}
+.headings main .content .task .deleteTask {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #F7DAD9;
+  border: none;
+  color: #5C4B51;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9em;
+  padding: 4px 12px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(92, 75, 81, 0.1);
+}
+.headings main .content .task .deleteTask:hover {
+  color: #ff3333;
+  background-color: #FAE5E4;
+  box-shadow: 0 3px 6px rgba(92, 75, 81, 0.2);
+}
+
+.hidden {
+  display: none;
+}/*# sourceMappingURL=main.css.map */
