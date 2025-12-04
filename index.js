@@ -1,11 +1,13 @@
 const express = require("express");
 const path = require("path");
+const bcrypt = require('bcrypt');
 const app = express();
 const port = 3000;
 const generateUniqueId = require('generate-unique-id');
-const { addNewTask, editTask, deleteTask, getAllTasks, getCategoryTasks} = require("./lib/db");
+const { addNewTask, editTask, deletetask, getAllTasks, getCategoryTasks} = require("./lib/db");
 const { addNewUser, getUser } = require("./lib/auth");
 
+const saltRounds = 10;
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -30,41 +32,46 @@ app.get("/login", (req, res) => {
     res.render("login.ejs");
 })
 
-app.post("/user/sign-up", (req, res) => {
+app.post("/user/sign-up", async (req, res) => {
     let {name, username, password} = req.body;
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hashedPassword = bcrypt.hashSync(password, salt);
     console.log(req.body);
-    data.push(req.body);
-    data.forEach((e)=> {
-        console.log(e);
-    }) 
-    res.redirect("/login");
-    // let userId = addNewUser({name, username, password});
-    // console.log(userId);
-    // if(userId){
-    //     res.redirect("/");
-    // }else{
-    //     res.redirect("/sign-up");
-    // }
+    // data.push(req.body);
+    // data.forEach((e)=> {
+    //     console.log(e);
+    // }) 
+    let userId = await addNewUser({name, username, hashedPassword});
+    console.log(userId);
+    if(userId){
+        res.redirect("/login");
+    }else{
+        res.redirect("/sign-up");
+    }
+    // res.redirect("/login");
 })
 
-app.post("/user/sign-in", (req, res) => {
+app.post("/user/sign-in", async (req, res) => {
     let {username, password} = req.body;
-    let user = data.find((p) => p.username === username);
-    res.redirect(`/user?name=${user.name}`)
+    let user = await getUser(username);
+    if(!user || !bcrypt.compareSync(password, user.hashedPassword)){
+        return res.redirect("/login");
+    }
+    res.redirect(`/user?name=${user.name}&userId=${user._id}`);
 })
 
-app.get("/user", (req, res) => {
-    let {name} = req.query;
-    let allTasks = getAllTasks();
-    res.render("user.ejs", {name, allTasks});
+app.get("/user", async(req, res) => {
+    let {name, userId} = req.query;
+    let allTasks = await getAllTasks(userId);
+    res.render("user.ejs", {name, allTasks, userId});
 })
 
 app.post("/newtask", (req, res) => {
     console.log("req received");
-    let {title, description, date, category} = req.body;
-    var id1 = generateUniqueId();
+    let {title, description, date, category, userId} = req.body;
+    console.log("This is the userId: " + userId);
     let task = {
-        id: id1,
+        userId: userId,
         title : title,
         description : description,
         date : date,
@@ -75,23 +82,31 @@ app.post("/newtask", (req, res) => {
     res.json(task);
 })
 
-app.post("/edittask", (req, res) => {
-    console.log("req received");
-    let {id, title, description, date, category} = req.body;
-    let upsertedId = editTask(id, {title, description, date, category});
-    if(!upsertedId){
-        return res.json({error: "Error in editing task"});
+app.post("/edittask", async (req, res) => { // Make async
+    console.log("Edit req received");
+    let {id, title, description, date, category, priority} = req.body;
+    
+    // Call the DB function
+    let isUpdated = await editTask(id, {title, description, date, category, priority});
+    
+    if(isUpdated){
+        // Send back the updated data so frontend can update UI
+        res.json({ id, title, description, date, category, priority, status: "success" });
+    } else {
+        res.status(500).json({error: "Failed to update task"});
     }
-    res.json(task);
 })
 
-app.post("/deletetask", (req, res) => {
+app.post("/deletetask", async (req, res) => { // Make async
     let {id} = req.body;
-    let task = allTasks.find((t) => t.id === id);
-    if(task){
-        allTasks = allTasks.filter((t) => t.id !== id);
+    
+    let isDeleted = await deletetask(id);
+    
+    if (isDeleted) {
+        res.json({ status: "success", id: id });
+    } else {
+        res.status(500).json({ error: "Failed to delete task" });
     }
-    res.json(allTasks);
 })
 
 app.get("/user/new-grp", (req, res) => {

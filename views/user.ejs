@@ -26,7 +26,7 @@
 
       <h1>To-Do List</h1>
 
-      <button onclick="createNewTask()">
+      <button onclick="createNewTask('<%= userId %>')">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="30px" id="add-task" fill="#EDB8B5">
           <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
           <path
@@ -69,7 +69,41 @@
         </div>
       </div>
       <div class="content">
-        
+        <% if (Array.isArray(allTasks) && allTasks.length) { %>
+          <% allTasks.forEach(task => { %>
+            <div class="task" data-id="<%= task._id %>">
+              <div class="task-header">
+                <input type="checkbox" name="checkbox" id="checkbox-<%= task._id %>">
+                <label for="checkbox-<%= task._id %>" class="taskHead"><%= task.title %></label>
+                <svg width="25px" class="editTask" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#5C4B51">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <g id="Complete">
+                      <g id="edit">
+                        <g>
+                          <path d="M20,16v4a2,2,0,0,1-2,2H4a2,2,0,0,1-2-2V6A2,2,0,0,1,4,4H8" fill="none" stroke="#5C4B51" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                          <polygon fill="none" points="12.5 15.8 22 6.2 17.8 2 8.3 11.5 8 16 12.5 15.8" stroke="#5C4B51" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+
+              <div class="taskDesc"><%- task.description %></div>
+
+              <div class="task-footer">
+                <div class="deadline"><i><%= task.date %></i></div>
+                <div class="categ"><%= task.category %></div>
+              </div>
+
+              <button onclick="deleteTask(event)" class="deleteTask">Delete</button>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <p>No tasks yet.</p>
+        <% } %>
       </div>
     </main>
 
